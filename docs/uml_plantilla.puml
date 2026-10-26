@@ -1,0 +1,18 @@
+' PLANTILLA para su fragmento UML.
+' Copie este archivo como docs/uml_<clase>.puml (ej: docs/uml_fila.puml),
+' reemplace CNombreDeSuClase por su clase y complete atributos y métodos
+' (los del contrato + los privados auxiliares que usted agregue).
+' Dibuje SOLO las relaciones de su clase, con el símbolo correcto y la multiplicidad.
+@startuml
+class CNombreDeSuClase {
+- atributo: tipo
++ metodo1(parametros): tipoRetorno
++ metodo2(parametros): tipoRetorno
+}
+
+' Elija el símbolo que corresponde y borre los demás:
+' CNombreDeSuClase "1" *-- "0..*" COtraClase : composición (crea y destruye)
+' CNombreDeSuClase "0..*" o-- "0..*" COtraClase : agregación (agrupa sin poseer)
+' CNombreDeSuClase "0..*" --> "0..1" COtraClase : asociación (la conoce)
+' CNombreDeSuClase ..> COtraClase : dependencia (la usa como parámetro)
+@enduml

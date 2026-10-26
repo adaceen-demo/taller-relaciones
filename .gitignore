@@ -1,0 +1,8 @@
+# Compilado
+build/*
+!build/.gitkeep
+relaciones
+relaciones.exe
+*.o
+*.d
+*.exe

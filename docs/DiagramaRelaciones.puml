@@ -1,0 +1,71 @@
+' Diagrama BASE del taller (pegar en https://plantuml.com/ para visualizarlo).
+' Muestra las cuatro clases y los tres tipos de relación que se practican.
+' Cada persona o grupo completa su copia en docs/uml_<clase>.puml (ver uml_plantilla.puml).
+@startuml
+title Taller Relaciones en Bus Fever Party
+
+class CTablero {
+- ancho: int
+- alto: int
+- vehiculos: vector<CVehiculo*>
++ CTablero(ancho, alto)
++ ~CTablero()
++ estaDentro(x, y): bool
++ crearVehiculo(color, capacidad, x, y): CVehiculo*
++ vehiculoEn(x, y): CVehiculo*
++ cantidadVehiculos(): int
++ retirarVehiculo(x, y): bool
+}
+
+class CVehiculo {
+- color: char
+- capacidad: int
+- ocupados: int
+- x: int
+- y: int
+- filaAsociada: CFila*
+- {static} vivos: int
++ CVehiculo(color, capacidad, x, y)
++ ~CVehiculo()
++ asociarFila(fila: CFila*)
++ recoger(): int
++ estaLleno(): bool
++ {static} getVivos(): int
+}
+
+class CFila {
+- pasajeros: vector<CPasajero*>
++ agregar(pasajero: CPasajero*): bool
++ frente(): CPasajero*
++ atender(): CPasajero*
++ cantidad(): int
++ estaVacia(): bool
++ contarPorColor(color): int
+}
+
+class CPasajero {
+- id: int
+- color: char
++ CPasajero(id, color)
++ puedeAbordar(vehiculo: CVehiculo): bool
+}
+
+' COMPOSICIÓN (rombo relleno): el tablero crea y destruye sus vehículos.
+CTablero "1" *-- "0..*" CVehiculo : posee >
+
+' ASOCIACIÓN (flecha simple): el vehículo conoce la fila; no es su dueño.
+CVehiculo "0..*" --> "0..1" CFila : recoge de >
+
+' AGREGACIÓN (rombo vacío): la fila agrupa pasajeros que no posee.
+CFila "0..*" o-- "0..*" CPasajero : agrupa >
+
+' DEPENDENCIA (punteada): el pasajero usa un vehículo solo como parámetro.
+CPasajero ..> CVehiculo : consulta en puedeAbordar >
+
+legend right
+  *--  composición: el todo crea y destruye la parte
+  o--  agregación: el todo agrupa partes que no posee
+  -->  asociación: una clase conoce a otra (guarda un puntero)
+  ..>  dependencia: la usa solo dentro de un método
+endlegend
+@enduml
